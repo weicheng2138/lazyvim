@@ -129,13 +129,42 @@ return {
     opts = { use_diagnostic_signs = true },
   },
 
-  -- add cmp-emoji
+  -- file explorer
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = { "hrsh7th/cmp-emoji" },
-    ---@param opts cmp.ConfigSchema
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          show_hidden_count = true,
+          hide_dotfiles = false,
+          hide_gitignored = true,
+          hide_by_name = {
+            -- '.git',
+            ".DS_Store",
+            -- 'thumbs.db',
+          },
+          never_show = {},
+        },
+      },
+    },
+  },
+
+  -- dashboard
+  {
+    "nvimdev/dashboard-nvim",
+    event = "VimEnter",
     opts = function(_, opts)
-      table.insert(opts.sources, { name = "emoji" })
+      local logo = [[
+        ██╗    ██╗███████╗██╗ ██████╗██╗  ██╗███████╗███╗   ██╗ ██████╗ 
+        ██║    ██║██╔════╝██║██╔════╝██║  ██║██╔════╝████╗  ██║██╔════╝ 
+        ██║ █╗ ██║█████╗  ██║██║     ███████║█████╗  ██╔██╗ ██║██║  ███╗
+        ██║███╗██║██╔══╝  ██║██║     ██╔══██║██╔══╝  ██║╚██╗██║██║   ██║
+        ╚███╔███╔╝███████╗██║╚██████╗██║  ██║███████╗██║ ╚████║╚██████╔╝
+        ╚══╝╚══╝ ╚══════╝╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝ 
+      ]]
+      logo = string.rep("\n", 8) .. logo .. "\n\n"
+      opts.config.header = vim.split(logo, "\n")
     end,
   },
 }
